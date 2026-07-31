@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Campus Heroes — Hero Moments</title>
+<title>Main Stage — Rockstar Moments</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy-deep: #0A1330;
-    --navy: #0F1E4A;
-    --navy-light: #1B3A73;
+    --stage-black: #0B0B0F;
+    --charcoal: #16161D;
+    --smoke: #23232E;
     --cream: #F2ECD9;
     --cream-dim: #E7DFC6;
     --gold: #E8A93B;
     --gold-bright: #F4C463;
+    --spot: #FF3D7F;
   }
 
   * { box-sizing: border-box; }
@@ -22,8 +23,14 @@
   body {
     margin: 0;
     min-height: 100vh;
-    background:
-      radial-gradient(ellipse 900px 500px at 50% -10%, #24356E 0%, var(--navy) 45%, var(--navy-deep) 100%);
+    background-color: var(--charcoal);
+    background-image:
+      /* spotlight thrown in from the top-left corner */
+      linear-gradient(154deg, rgba(244,196,99,0.20) 0%, rgba(232,169,59,0.07) 22%, transparent 48%),
+      /* spotlight thrown in from the top-right corner */
+      linear-gradient(206deg, rgba(232,169,59,0.16) 0%, rgba(232,169,59,0.05) 22%, transparent 48%),
+      /* charcoal base fading to stage black at the floor */
+      linear-gradient(180deg, var(--charcoal) 0%, var(--stage-black) 78%);
     background-attachment: fixed;
     font-family: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--cream);
@@ -43,23 +50,38 @@
     position: absolute;
     inset: 0;
     background:
-      repeating-conic-gradient(from 0deg, rgba(255,255,255,0.035) 0deg 6deg, transparent 6deg 12deg);
+      repeating-conic-gradient(from 0deg, rgba(244,196,99,0.05) 0deg 6deg, transparent 6deg 12deg);
     mask-image: radial-gradient(circle at 50% 20%, black, transparent 70%);
     pointer-events: none;
   }
   .eyebrow-badge {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
     letter-spacing: 3px;
     font-size: 12px;
     text-transform: uppercase;
-    color: var(--navy-deep);
-    background: var(--gold);
+    color: var(--gold-bright);
+    background: rgba(255,61,127,0.10);
+    border: 1px solid var(--spot);
     padding: 5px 14px;
-    border-radius: 3px;
+    border-radius: 999px;
     margin-bottom: 14px;
     position: relative;
+  }
+  .live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--spot);
+    box-shadow: 0 0 8px var(--spot);
+    animation: livePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
   }
   h1.title {
     font-family: 'Anton', 'Barlow Condensed', sans-serif;
@@ -69,7 +91,7 @@
     margin: 0;
     letter-spacing: 1px;
     color: var(--cream);
-    text-shadow: 0 3px 0 rgba(0,0,0,0.4);
+    text-shadow: 0 3px 0 rgba(0,0,0,0.55);
     position: relative;
   }
   h1.title .gold { color: var(--gold-bright); }
@@ -110,7 +132,7 @@
   }
   .btn:hover { transform: translateY(-2px); }
   .btn:focus-visible { outline: 3px solid var(--gold-bright); outline-offset: 2px; }
-  .btn-primary { background: var(--gold); color: var(--navy-deep); }
+  .btn-primary { background: var(--gold); color: var(--stage-black); }
   .btn-primary:hover { background: var(--gold-bright); }
   .btn-ghost { background: transparent; color: var(--cream); border-color: rgba(242,236,217,0.4); }
   .btn-ghost:hover { border-color: var(--cream); }
@@ -122,7 +144,8 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--cream);
-    background: var(--navy-light);
+    background: var(--smoke);
+    border-left: 3px solid var(--gold);
     display: inline-block;
     padding: 6px 18px;
     border-radius: 3px;
@@ -138,15 +161,19 @@
   }
   .moment-card {
     background: rgba(242,236,217,0.05);
-    border: 2px solid rgba(232,169,59,0.35);
+    border: 2px solid rgba(232,169,59,0.30);
     border-left: 4px solid var(--gold);
     border-radius: 8px;
     padding: 18px 20px;
     position: relative;
-    box-shadow: 0 8px 22px rgba(0,0,0,0.3);
-    transition: transform 140ms ease, box-shadow 140ms ease;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+    transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
   }
-  .moment-card:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(0,0,0,0.4); }
+  .moment-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.55);
+    border-color: var(--spot);
+  }
   .moment-top {
     display: flex;
     justify-content: space-between;
@@ -171,7 +198,15 @@
     line-height: 1.55;
     color: rgba(242,236,217,0.92);
   }
-  .wall-empty, .sighting-empty {
+  .moment-credit {
+    margin-top: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: rgba(232,169,59,0.75);
+  }
+  .wall-empty {
     text-align: center;
     padding: 30px 10px;
     color: rgba(242,236,217,0.5);
@@ -238,14 +273,17 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    background: rgba(242,236,217,0.06);
-    border: 1px solid rgba(242,236,217,0.2);
+    background: rgba(242,236,217,0.05);
+    border: 1px solid rgba(242,236,217,0.18);
     border-radius: 6px;
     padding: 10px 14px;
     margin-bottom: 16px;
+    transition: border-color 140ms ease;
   }
+  .search-bar:focus-within { border-color: var(--gold); }
   .search-bar input {
     flex: 1;
+    min-width: 0;
     background: transparent;
     border: none;
     outline: none;
@@ -276,15 +314,30 @@
     padding: 9px 12px;
     font-size: 13px;
     border-left: 3px solid var(--gold);
+    transition: border-color 140ms ease, background 140ms ease;
   }
-  .recent-guide { font-weight: 700; color: var(--cream); }
+  .recent-item:hover {
+    border-left-color: var(--spot);
+    background: rgba(242,236,217,0.07);
+  }
+  .recent-guide { font-weight: 700; color: var(--cream); white-space: nowrap; }
   .recent-snippet {
+    flex: 1;
+    min-width: 0;
     color: rgba(242,236,217,0.6);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .recent-date { margin-left: auto; color: rgba(242,236,217,0.4); font-size: 12px; white-space: nowrap; }
+  .recent-credit {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(232,169,59,0.7);
+    white-space: nowrap;
+  }
+  .recent-date { color: rgba(242,236,217,0.4); font-size: 12px; white-space: nowrap; }
   .recent-empty {
     text-align: center;
     padding: 20px 10px;
@@ -301,6 +354,7 @@
   .lookup-card {
     background: rgba(242,236,217,0.05);
     border: 1px solid rgba(242,236,217,0.15);
+    border-left: 3px solid var(--spot);
     border-radius: 8px;
     padding: 18px 20px;
   }
@@ -322,6 +376,7 @@
     font-size: 13px;
     color: rgba(242,236,217,0.6);
   }
+  .lookup-total b { color: var(--gold-bright); }
   .lookup-moments {
     display: flex;
     flex-direction: column;
@@ -343,38 +398,47 @@
     line-height: 1.5;
     color: rgba(242,236,217,0.9);
   }
+  .lookup-moment-credit {
+    margin-top: 6px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: rgba(232,169,59,0.7);
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .moment-card, .btn { transition: none; }
+    .moment-card, .btn, .recent-item, .search-bar { transition: none; }
+    .live-dot { animation: none; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="hero">
-    <span class="eyebrow-badge">Live Shoutouts</span>
-    <h1 class="title">CAMPUS <span class="gold">HEROES</span></h1>
-    <div class="tagline">Hero Moments — Awaken Your Power</div>
+    <span class="eyebrow-badge"><span class="live-dot"></span>Live Shoutouts</span>
+    <h1 class="title">MAIN <span class="gold">STAGE</span></h1>
+    <div class="tagline">Rockstar Moments — Spot the Set, Log the Moment</div>
     <div class="cta-row">
-      <a class="btn btn-primary" id="formLink" href="#" target="_blank" rel="noopener">📋 Log a Hero Moment</a>
+      <a class="btn btn-primary" id="formLink" href="#" target="_blank" rel="noopener">🎤 Log a Rockstar Moment</a>
       <a class="btn btn-ghost" href="https://ontour.admissions.purdue.edu/tgis/" target="_blank" rel="noopener">🔗 TGIS</a>
       <button class="btn btn-ghost" id="refreshBtnTop" type="button">↻ Refresh Now</button>
     </div>
   </div>
 
-  <div class="section-label"><span>Recent Activity</span></div>
+  <div class="section-label"><span>Just In</span></div>
   <div class="recent-feed" id="recentFeed"></div>
 
-  <div class="section-label"><span>Hero Moments Wall</span></div>
+  <div class="section-label"><span>The Setlist</span></div>
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search by guide name or keyword…" autocomplete="off">
     <span class="result-count" id="resultCount"></span>
   </div>
   <div class="wall" id="wall"></div>
 
-  <div class="section-label"><span>Look Up a Guide</span></div>
+  <div class="section-label"><span>Artist Lookup</span></div>
   <div class="search-bar">
-    <input list="guideNames" id="guideLookupInput" placeholder="Type a guide's name to see all their Hero Moments…" autocomplete="off">
+    <input list="guideNames" id="guideLookupInput" placeholder="Type a guide's name to see all their Rockstar Moments…" autocomplete="off">
     <datalist id="guideNames"></datalist>
   </div>
   <div class="lookup-result" id="lookupResult"></div>
@@ -386,13 +450,14 @@
   <div class="error-box" id="errorBox"></div>
 
   <footer>
-    <div class="footer-tag">Train. Guide. Inspire. Awaken Your Power.</div>
+    <div class="footer-tag">Train. Guide. Inspire. Own the Stage.</div>
   </footer>
 </div>
 
 <script>
   const SHEET_ID = "1IWwy3ygxsq81p9VRUW8MTv-tixjRWeb4BfcA-sT8YI8";
-  const TAB_NAME = "Campus Heroes Responses";
+  // Numeric tab id, not the tab name — the gid survives a tab rename, a name does not.
+  const SHEET_GID = "944135761";
   const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdJOB5KNIYejc93BGc_JOsLWL-E_j3Ze5QBt74Bqu_382mskw/viewform";
   const REFRESH_MS = 30000;
 
@@ -415,7 +480,7 @@
     const base = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq`;
     const params = new URLSearchParams({
       tqx: "out:json;responseHandler:handleGvizResponse",
-      sheet: TAB_NAME,
+      gid: SHEET_GID,
       ts: Date.now()
     });
     return `${base}?${params.toString()}`;
@@ -435,10 +500,16 @@
     return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
   }
 
+  // Column D is optional — render nothing at all when no nominator was given.
+  function credit(nominator, className) {
+    if (!nominator) return "";
+    return `<div class="${className}">spotted by ${escapeHtml(nominator)}</div>`;
+  }
+
   function renderWall(list) {
     resultCountEl.textContent = `${list.length} moment${list.length === 1 ? "" : "s"}`;
     if (list.length === 0) {
-      wallEl.innerHTML = `<div class="wall-empty">No Hero Moments match that search yet.</div>`;
+      wallEl.innerHTML = `<div class="wall-empty">No Rockstar Moments match that search yet.</div>`;
       return;
     }
     wallEl.innerHTML = list.map(m => `
@@ -448,6 +519,7 @@
           <span class="moment-date">${escapeHtml(formatDate(m.timestamp))}</span>
         </div>
         <div class="moment-text">${escapeHtml(m.moment || "(no details given)")}</div>
+        ${credit(m.nominator, "moment-credit")}
       </div>
     `).join("");
   }
@@ -455,13 +527,14 @@
   function renderRecentActivity() {
     const recent = allMoments.slice(0, 5);
     if (recent.length === 0) {
-      recentFeedEl.innerHTML = `<div class="recent-empty">No Hero Moments logged yet — be the first!</div>`;
+      recentFeedEl.innerHTML = `<div class="recent-empty">No Rockstar Moments logged yet — be the first!</div>`;
       return;
     }
     recentFeedEl.innerHTML = recent.map(m => `
       <div class="recent-item">
         <span class="recent-guide">${escapeHtml(m.guide)}</span>
         <span class="recent-snippet">${escapeHtml(m.moment || "")}</span>
+        ${m.nominator ? `<span class="recent-credit">spotted by ${escapeHtml(m.nominator)}</span>` : ""}
         <span class="recent-date">${escapeHtml(formatDate(m.timestamp))}</span>
       </div>
     `).join("");
@@ -475,25 +548,26 @@
   function lookupGuide(rawQuery) {
     const query = rawQuery.trim().toLowerCase();
     if (!query) {
-      lookupResultEl.innerHTML = `<div class="lookup-empty">Start typing a name to see all their logged Hero Moments.</div>`;
+      lookupResultEl.innerHTML = `<div class="lookup-empty">Start typing a name to see all their logged Rockstar Moments.</div>`;
       return;
     }
     const matches = allMoments.filter(m => m.guide.toLowerCase() === query);
     if (matches.length === 0) {
-      lookupResultEl.innerHTML = `<div class="lookup-empty">No Hero Moments found for "${escapeHtml(rawQuery)}" yet.</div>`;
+      lookupResultEl.innerHTML = `<div class="lookup-empty">No Rockstar Moments found for "${escapeHtml(rawQuery)}" yet.</div>`;
       return;
     }
     lookupResultEl.innerHTML = `
       <div class="lookup-card">
         <div class="lookup-header">
           <div class="lookup-name">${escapeHtml(matches[0].guide)}</div>
-          <div class="lookup-total"><b>${matches.length}</b> Hero Moment${matches.length === 1 ? "" : "s"}</div>
+          <div class="lookup-total"><b>${matches.length}</b> Rockstar Moment${matches.length === 1 ? "" : "s"}</div>
         </div>
         <div class="lookup-moments">
           ${matches.map(m => `
             <div class="lookup-moment">
               <div class="lookup-moment-date">${escapeHtml(formatDate(m.timestamp))}</div>
               <div class="lookup-moment-text">${escapeHtml(m.moment || "(no details given)")}</div>
+              ${credit(m.nominator, "lookup-moment-credit")}
             </div>
           `).join("")}
         </div>
@@ -520,9 +594,10 @@
       const timestamp = cells[0] && cells[0].f ? cells[0].f : (cells[0] && cells[0].v ? cells[0].v : "");
       const guide = cells[1] && cells[1].v ? String(cells[1].v).trim() : null;
       const moment = cells[2] && cells[2].v ? String(cells[2].v).trim() : "";
+      const nominator = cells[3] && cells[3].v ? String(cells[3].v).trim() : "";
       if (!guide) return;
 
-      allMoments.push({ timestamp, guide, moment });
+      allMoments.push({ timestamp, guide, moment, nominator });
     });
 
     allMoments.reverse();
@@ -553,7 +628,7 @@
     errorBoxEl.innerHTML = `
       <b>Couldn't reach the responses sheet.</b><br>
       Double-check: Share → General access → "Anyone with the link" (Viewer),
-      and that the tab is named exactly "${TAB_NAME}".
+      and that the responses tab is still gid ${SHEET_GID} in the sheet URL.
       <br><br>Technical detail: ${detail}
     `;
   }
@@ -577,734 +652,6 @@
   searchInputEl.addEventListener("input", applySearch);
   guideLookupInputEl.addEventListener("input", () => lookupGuide(guideLookupInputEl.value));
   lookupGuide("");
-  loadData();
-  setInterval(loadData, REFRESH_MS);
-</script>
-</body>
-</html>      radial-gradient(ellipse 900px 500px at 50% -10%, #24356E 0%, var(--navy) 45%, var(--navy-deep) 100%);
-    background-attachment: fixed;
-    font-family: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: var(--cream);
-    padding: 0 0 60px;
-  }
-
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
-
-  .hero {
-    text-align: center;
-    padding: 44px 20px 30px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      repeating-conic-gradient(from 0deg, rgba(255,255,255,0.035) 0deg 6deg, transparent 6deg 12deg);
-    mask-image: radial-gradient(circle at 50% 20%, black, transparent 70%);
-    pointer-events: none;
-  }
-  .eyebrow-badge {
-    display: inline-block;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    letter-spacing: 3px;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: var(--navy-deep);
-    background: var(--gold);
-    padding: 5px 14px;
-    border-radius: 3px;
-    margin-bottom: 14px;
-    position: relative;
-  }
-  h1.title {
-    font-family: 'Anton', 'Barlow Condensed', sans-serif;
-    font-weight: 400;
-    font-size: clamp(48px, 9vw, 84px);
-    line-height: 0.95;
-    margin: 0;
-    letter-spacing: 1px;
-    color: var(--cream);
-    text-shadow: 0 3px 0 rgba(0,0,0,0.4);
-    position: relative;
-  }
-  h1.title .gold { color: var(--gold-bright); }
-  .tagline {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: var(--cream-dim);
-    margin-top: 10px;
-    position: relative;
-  }
-
-  .cta-row {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    margin-top: 22px;
-    flex-wrap: wrap;
-    position: relative;
-  }
-  .btn {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 12px 26px;
-    border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: transform 120ms ease;
-  }
-  .btn:hover { transform: translateY(-2px); }
-  .btn:focus-visible { outline: 3px solid var(--gold-bright); outline-offset: 2px; }
-  .btn-primary { background: var(--gold); color: var(--navy-deep); }
-  .btn-primary:hover { background: var(--gold-bright); }
-  .btn-ghost { background: transparent; color: var(--cream); border-color: rgba(242,236,217,0.4); }
-  .btn-ghost:hover { border-color: var(--cream); }
-
-  .section-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--cream);
-    background: var(--navy-light);
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 3px;
-    margin: 44px 0 18px;
-    transform: skewX(-6deg);
-  }
-  .section-label span { display: inline-block; transform: skewX(6deg); }
-
-  .board {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 14px;
-  }
-  .card {
-    border-radius: 8px;
-    padding: 20px 18px 18px;
-    position: relative;
-    border: 2px solid rgba(255,255,255,0.08);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
-    transition: transform 140ms ease, box-shadow 140ms ease;
-    overflow: hidden;
-  }
-  .card::after {
-    content: "";
-    position: absolute;
-    top: -30%; right: -30%;
-    width: 140%; height: 140%;
-    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,0.45); }
-
-  .card[data-power="Surge"]        { background: var(--surge-bg); border-color: var(--surge-accent); }
-  .card[data-power="Quick Switch"] { background: var(--quickswitch-bg); border-color: var(--quickswitch-accent); }
-  .card[data-power="Empath"]       { background: var(--empath-bg); border-color: var(--empath-accent); }
-  .card[data-power="Cortex"]       { background: var(--cortex-bg); border-color: var(--cortex-accent); }
-  .card[data-power="Iron Focus"]   { background: var(--ironfocus-bg); border-color: var(--ironfocus-accent); }
-
-  .power-icon { font-size: 26px; margin-bottom: 6px; display: block; }
-  .power-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .power-desc {
-    font-size: 12px;
-    line-height: 1.4;
-    color: rgba(242,236,217,0.6);
-    margin-bottom: 12px;
-  }
-  .card[data-power="Surge"] .power-name        { color: var(--surge-accent); }
-  .card[data-power="Quick Switch"] .power-name { color: var(--quickswitch-accent); }
-  .card[data-power="Empath"] .power-name       { color: var(--empath-accent); }
-  .card[data-power="Cortex"] .power-name       { color: var(--cortex-accent); }
-  .card[data-power="Iron Focus"] .power-name   { color: var(--ironfocus-accent); }
-
-  .leader-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.15;
-    min-height: 30px;
-    color: var(--cream);
-  }
-  .leader-name.empty { font-size: 14px; font-weight: 500; font-style: italic; color: rgba(242,236,217,0.55); text-transform: none; }
-  .votes { font-size: 13px; color: rgba(242,236,217,0.75); margin-top: 8px; }
-  .votes b { color: var(--cream); font-size: 15px; }
-  .tie-list { font-size: 12px; color: rgba(242,236,217,0.6); margin-top: 6px; }
-
-  .status-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 18px;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    color: rgba(242,236,217,0.65);
-  }
-  .status-row button {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    background: rgba(242,236,217,0.1);
-    color: var(--cream);
-    border: 1px solid rgba(242,236,217,0.3);
-    padding: 6px 14px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .status-row button:hover { background: rgba(242,236,217,0.18); }
-
-  .error-box {
-    margin-top: 18px;
-    border: 2px solid #E14B4B;
-    background: rgba(225,75,75,0.12);
-    color: #FFD6D6;
-    padding: 14px 16px;
-    border-radius: 6px;
-    font-size: 13px;
-    line-height: 1.6;
-    display: none;
-  }
-  .error-box b { color: #fff; }
-
-  footer {
-    text-align: center;
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(242,236,217,0.15);
-  }
-  .footer-tag {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 15px;
-    color: var(--gold-bright);
-  }
-
-  .search-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(242,236,217,0.06);
-    border: 1px solid rgba(242,236,217,0.2);
-    border-radius: 6px;
-    padding: 10px 14px;
-    margin-bottom: 16px;
-  }
-  .search-bar input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--cream);
-    font-family: 'Barlow', sans-serif;
-    font-size: 15px;
-  }
-  .search-bar input::placeholder { color: rgba(242,236,217,0.45); }
-  .result-count {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    color: rgba(242,236,217,0.55);
-    white-space: nowrap;
-  }
-
-  .sightings-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .sighting-card {
-    background: rgba(242,236,217,0.05);
-    border-left: 4px solid var(--gold);
-    border-radius: 6px;
-    padding: 14px 16px;
-  }
-  .sighting-card[data-power="Surge"]        { border-left-color: var(--surge-accent); }
-  .sighting-card[data-power="Quick Switch"] { border-left-color: var(--quickswitch-accent); }
-  .sighting-card[data-power="Empath"]       { border-left-color: var(--empath-accent); }
-  .sighting-card[data-power="Cortex"]       { border-left-color: var(--cortex-accent); }
-  .sighting-card[data-power="Iron Focus"]   { border-left-color: var(--ironfocus-accent); }
-
-  .sighting-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-  .sighting-guide {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    color: var(--cream);
-  }
-  .sighting-power {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgba(242,236,217,0.6);
-  }
-  .sighting-date {
-    font-size: 12px;
-    color: rgba(242,236,217,0.45);
-  }
-  .sighting-text {
-    font-size: 14px;
-    line-height: 1.5;
-    color: rgba(242,236,217,0.9);
-  }
-  .sighting-empty {
-    text-align: center;
-    padding: 30px 10px;
-    color: rgba(242,236,217,0.5);
-    font-size: 14px;
-  }
-
-  .recent-feed {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .recent-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(242,236,217,0.04);
-    border-radius: 5px;
-    padding: 9px 12px;
-    font-size: 13px;
-  }
-  .recent-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .recent-item[data-power="Surge"] .recent-dot        { background: var(--surge-accent); }
-  .recent-item[data-power="Quick Switch"] .recent-dot { background: var(--quickswitch-accent); }
-  .recent-item[data-power="Empath"] .recent-dot       { background: var(--empath-accent); }
-  .recent-item[data-power="Cortex"] .recent-dot       { background: var(--cortex-accent); }
-  .recent-item[data-power="Iron Focus"] .recent-dot   { background: var(--ironfocus-accent); }
-  .recent-guide { font-weight: 700; color: var(--cream); }
-  .recent-power { color: rgba(242,236,217,0.6); }
-  .recent-date { margin-left: auto; color: rgba(242,236,217,0.4); font-size: 12px; white-space: nowrap; }
-  .recent-empty {
-    text-align: center;
-    padding: 20px 10px;
-    color: rgba(242,236,217,0.5);
-    font-size: 13px;
-  }
-
-  .lookup-result { min-height: 4px; }
-  .lookup-empty {
-    color: rgba(242,236,217,0.45);
-    font-size: 13px;
-    padding: 4px 2px 0;
-  }
-  .lookup-card {
-    background: rgba(242,236,217,0.05);
-    border: 1px solid rgba(242,236,217,0.15);
-    border-radius: 8px;
-    padding: 18px 20px;
-  }
-  .lookup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-  .lookup-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    color: var(--cream);
-  }
-  .lookup-total {
-    font-size: 13px;
-    color: rgba(242,236,217,0.6);
-  }
-  .lookup-bars { display: flex; flex-direction: column; gap: 8px; }
-  .lookup-row { display: grid; grid-template-columns: 110px 1fr 28px; align-items: center; gap: 10px; }
-  .lookup-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: rgba(242,236,217,0.75);
-  }
-  .lookup-track {
-    height: 10px;
-    background: rgba(242,236,217,0.08);
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  .lookup-fill { height: 100%; border-radius: 5px; }
-  .lookup-row[data-power="Surge"] .lookup-fill        { background: var(--surge-accent); }
-  .lookup-row[data-power="Quick Switch"] .lookup-fill { background: var(--quickswitch-accent); }
-  .lookup-row[data-power="Empath"] .lookup-fill       { background: var(--empath-accent); }
-  .lookup-row[data-power="Cortex"] .lookup-fill       { background: var(--cortex-accent); }
-  .lookup-row[data-power="Iron Focus"] .lookup-fill   { background: var(--ironfocus-accent); }
-  .lookup-count { font-size: 13px; color: rgba(242,236,217,0.7); text-align: right; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .card, .btn { transition: none; }
-  }
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="hero">
-    <span class="eyebrow-badge">Live Standings</span>
-    <h1 class="title">CAMPUS <span class="gold">HEROES</span></h1>
-    <div class="tagline">Power Leaderboard — Awaken Your Power</div>
-    <div class="cta-row">
-      <a class="btn btn-primary" id="formLink" href="#" target="_blank" rel="noopener">📋 Submit a Sighting</a>
-      <a class="btn btn-ghost" href="https://ontour.admissions.purdue.edu/tgis/" target="_blank" rel="noopener">🔗 TGIS</a>
-      <button class="btn btn-ghost" id="refreshBtnTop" type="button">↻ Refresh Now</button>
-    </div>
-  </div>
-
-  <div class="section-label"><span>Recent Activity</span></div>
-  <div class="recent-feed" id="recentFeed"></div>
-
-  <div class="section-label"><span>The Power Rankings</span></div>
-  <div class="board" id="board"></div>
-
-  <div class="section-label"><span>Look Up a Guide</span></div>
-  <div class="search-bar">
-    <input list="guideNames" id="guideLookupInput" placeholder="Type a guide's name to see their full breakdown…" autocomplete="off">
-    <datalist id="guideNames"></datalist>
-  </div>
-  <div class="lookup-result" id="lookupResult"></div>
-
-  <div class="section-label"><span>Search All Sightings</span></div>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search by guide name, power, or keyword…" autocomplete="off">
-    <span class="result-count" id="resultCount"></span>
-  </div>
-  <div class="sightings-list" id="sightingsList"></div>
-
-  <div class="status-row">
-    <div id="lastUpdated">Loading…</div>
-    <div id="status">Connecting to responses sheet…</div>
-  </div>
-  <div class="error-box" id="errorBox"></div>
-
-  <footer>
-    <div class="footer-tag">Awaken Your Power. Earn Your License. Leave Your Legacy.</div>
-  </footer>
-</div>
-
-<script>
-  const SHEET_ID = "1IWwy3ygxsq81p9VRUW8MTv-tixjRWeb4BfcA-sT8YI8";
-  const TAB_NAME = "Campus Heroes Responses";
-  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdJOB5KNIYejc93BGc_JOsLWL-E_j3Ze5QBt74Bqu_382mskw/viewform";
-  const POWERS = [
-    { name: "Surge", icon: "⚡", desc: "Keeps big groups engaged and the energy electric, even in tough conditions." },
-    { name: "Quick Switch", icon: "↻", desc: "Handles route disruptions, weird questions, or sudden changes without missing a beat." },
-    { name: "Empath", icon: "❤", desc: "Builds real rapport through authentic storytelling." },
-    { name: "Cortex", icon: "🧠", desc: "Nails complex academic paths and campus/tech facts with confidence." },
-    { name: "Iron Focus", icon: "🛡", desc: "Delivers a polished, well-structured tour every time, no exceptions." }
-  ];
-  const REFRESH_MS = 30000;
-
-  document.getElementById("formLink").href = FORM_URL;
-
-  const boardEl = document.getElementById("board");
-  const statusEl = document.getElementById("status");
-  const lastUpdatedEl = document.getElementById("lastUpdated");
-  const errorBoxEl = document.getElementById("errorBox");
-  const searchInputEl = document.getElementById("searchInput");
-  const sightingsListEl = document.getElementById("sightingsList");
-  const resultCountEl = document.getElementById("resultCount");
-  const recentFeedEl = document.getElementById("recentFeed");
-  const guideLookupInputEl = document.getElementById("guideLookupInput");
-  const guideNamesEl = document.getElementById("guideNames");
-  const lookupResultEl = document.getElementById("lookupResult");
-
-  let allSightings = [];
-
-  function buildUrl() {
-    const base = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq`;
-    const params = new URLSearchParams({
-      tqx: "out:json;responseHandler:handleGvizResponse",
-      sheet: TAB_NAME,
-      ts: Date.now()
-    });
-    return `${base}?${params.toString()}`;
-  }
-
-  function renderSkeleton() {
-    boardEl.innerHTML = POWERS.map(p => `
-      <div class="card" data-power="${p.name}">
-        <span class="power-icon">${p.icon}</span>
-        <div class="power-name">${p.name}</div>
-        <div class="power-desc">${p.desc}</div>
-        <div class="leader-name empty">—</div>
-        <div class="votes"></div>
-      </div>
-    `).join("");
-  }
-
-  function renderResults(tally) {
-    boardEl.innerHTML = POWERS.map(p => {
-      const entry = tally[p.name] || { max: 0, leaders: [] };
-      if (entry.max === 0 || entry.leaders.length === 0) {
-        return `
-          <div class="card" data-power="${p.name}">
-            <span class="power-icon">${p.icon}</span>
-            <div class="power-name">${p.name}</div>
-            <div class="power-desc">${p.desc}</div>
-            <div class="leader-name empty">No votes yet</div>
-            <div class="votes">Be the first to log one</div>
-          </div>`;
-      }
-      const [first, ...rest] = entry.leaders;
-      const tieNote = rest.length ? `<div class="tie-list">Tied with ${rest.join(", ")}</div>` : "";
-      return `
-        <div class="card" data-power="${p.name}">
-          <span class="power-icon">${p.icon}</span>
-          <div class="power-name">${p.name}</div>
-          <div class="power-desc">${p.desc}</div>
-          <div class="leader-name">${first}</div>
-          <div class="votes"><b>${entry.max}</b> observation${entry.max === 1 ? "" : "s"}</div>
-          ${tieNote}
-        </div>`;
-    }).join("");
-  }
-
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-  }
-
-  function formatDate(raw) {
-    if (!raw) return "";
-    const d = new Date(raw);
-    if (isNaN(d.getTime())) return String(raw);
-    return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
-  }
-
-  function renderSightings(list) {
-    resultCountEl.textContent = `${list.length} sighting${list.length === 1 ? "" : "s"}`;
-    if (list.length === 0) {
-      sightingsListEl.innerHTML = `<div class="sighting-empty">No sightings match that search yet.</div>`;
-      return;
-    }
-    sightingsListEl.innerHTML = list.map(s => `
-      <div class="sighting-card" data-power="${escapeHtml(s.power)}">
-        <div class="sighting-top">
-          <span class="sighting-guide">${escapeHtml(s.guide)}</span>
-          <span class="sighting-power">${escapeHtml(s.power)}</span>
-          <span class="sighting-date">${escapeHtml(formatDate(s.timestamp))}</span>
-        </div>
-        <div class="sighting-text">${escapeHtml(s.observation || "(no details given)")}</div>
-      </div>
-    `).join("");
-  }
-
-  function renderRecentActivity() {
-    const recent = allSightings.slice(0, 5);
-    if (recent.length === 0) {
-      recentFeedEl.innerHTML = `<div class="recent-empty">No sightings logged yet — be the first!</div>`;
-      return;
-    }
-    recentFeedEl.innerHTML = recent.map(s => `
-      <div class="recent-item" data-power="${escapeHtml(s.power)}">
-        <span class="recent-dot"></span>
-        <span class="recent-guide">${escapeHtml(s.guide)}</span>
-        <span class="recent-power">— ${escapeHtml(s.power)}</span>
-        <span class="recent-date">${escapeHtml(formatDate(s.timestamp))}</span>
-      </div>
-    `).join("");
-  }
-
-  function populateGuideNames() {
-    const names = [...new Set(allSightings.map(s => s.guide))].sort((a, b) => a.localeCompare(b));
-    guideNamesEl.innerHTML = names.map(n => `<option value="${escapeHtml(n)}"></option>`).join("");
-  }
-
-  function lookupGuide(rawQuery) {
-    const query = rawQuery.trim().toLowerCase();
-    if (!query) {
-      lookupResultEl.innerHTML = `<div class="lookup-empty">Start typing a name to see their full Power breakdown.</div>`;
-      return;
-    }
-    const matches = allSightings.filter(s => s.guide.toLowerCase() === query);
-    if (matches.length === 0) {
-      lookupResultEl.innerHTML = `<div class="lookup-empty">No sightings found for "${escapeHtml(rawQuery)}" yet.</div>`;
-      return;
-    }
-    const counts = {};
-    POWERS.forEach(p => { counts[p.name] = 0; });
-    matches.forEach(s => { if (counts[s.power] !== undefined) counts[s.power]++; });
-    const total = matches.length;
-    const max = Math.max(...Object.values(counts), 1);
-
-    lookupResultEl.innerHTML = `
-      <div class="lookup-card">
-        <div class="lookup-header">
-          <div class="lookup-name">${escapeHtml(matches[0].guide)}</div>
-          <div class="lookup-total"><b>${total}</b> total observation${total === 1 ? "" : "s"}</div>
-        </div>
-        <div class="lookup-bars">
-          ${POWERS.map(p => {
-            const c = counts[p.name];
-            const pct = Math.round((c / max) * 100);
-            return `
-              <div class="lookup-row" data-power="${p.name}">
-                <div class="lookup-label">${p.icon} ${p.name}</div>
-                <div class="lookup-track"><div class="lookup-fill" style="width:${c === 0 ? 0 : Math.max(pct, 6)}%"></div></div>
-                <div class="lookup-count">${c}</div>
-              </div>`;
-          }).join("")}
-        </div>
-      </div>
-    `;
-  }
-
-  function applySearch() {
-    const q = searchInputEl.value.trim().toLowerCase();
-    if (!q) { renderSightings(allSightings); return; }
-    const filtered = allSightings.filter(s =>
-      s.guide.toLowerCase().includes(q) ||
-      s.power.toLowerCase().includes(q) ||
-      (s.observation || "").toLowerCase().includes(q)
-    );
-    renderSightings(filtered);
-  }
-
-  function normalizePower(raw) {
-    if (!raw) return null;
-    const cleaned = raw.trim();
-    const found = POWERS.find(p =>
-      cleaned.toLowerCase().startsWith(p.name.toLowerCase())
-    );
-    return found ? found.name : cleaned;
-  }
-
-  function tallyVotes(gvizData) {
-    const rows = gvizData.table.rows || [];
-    const tally = {};
-    POWERS.forEach(p => { tally[p.name] = {}; });
-
-    allSightings = [];
-
-    rows.forEach(row => {
-      const cells = row.c || [];
-      const timestamp = cells[0] && cells[0].f ? cells[0].f : (cells[0] && cells[0].v ? cells[0].v : "");
-      const guide = cells[1] && cells[1].v ? String(cells[1].v).trim() : null;
-      const power = cells[2] && cells[2].v ? normalizePower(String(cells[2].v)) : null;
-      const observation = cells[3] && cells[3].v ? String(cells[3].v).trim() : "";
-      if (!guide || !power) return;
-
-      allSightings.push({ timestamp, guide, power, observation });
-
-      if (tally[power]) {
-        tally[power][guide] = (tally[power][guide] || 0) + 1;
-      }
-    });
-
-    allSightings.reverse();
-
-    const result = {};
-    POWERS.forEach(p => {
-      const counts = tally[p.name];
-      const entries = Object.entries(counts);
-      if (entries.length === 0) { result[p.name] = { max: 0, leaders: [] }; return; }
-      const max = Math.max(...entries.map(([, c]) => c));
-      const leaders = entries.filter(([, c]) => c === max).map(([name]) => name);
-      result[p.name] = { max, leaders };
-    });
-    return result;
-  }
-
-  let pendingTimeout = null;
-
-  window.handleGvizResponse = function(gvizData) {
-    if (pendingTimeout) { clearTimeout(pendingTimeout); pendingTimeout = null; }
-    try {
-      const tally = tallyVotes(gvizData);
-      renderResults(tally);
-      renderRecentActivity();
-      populateGuideNames();
-      lookupGuide(guideLookupInputEl.value);
-      applySearch();
-      const now = new Date();
-      lastUpdatedEl.textContent = `Updated ${now.toLocaleTimeString()}`;
-      statusEl.textContent = `Auto-refreshing every ${REFRESH_MS / 1000}s`;
-      errorBoxEl.style.display = "none";
-    } catch (err) {
-      showError(err.message);
-    }
-  };
-
-  function showError(detail) {
-    statusEl.textContent = "Could not load live data.";
-    errorBoxEl.style.display = "block";
-    errorBoxEl.innerHTML = `
-      <b>Couldn't reach the responses sheet.</b><br>
-      Double-check: Share → General access → "Anyone with the link" (Viewer),
-      and that the tab is named exactly "${TAB_NAME}".
-      <br><br>Technical detail: ${detail}
-    `;
-  }
-
-  function loadData() {
-    errorBoxEl.style.display = "none";
-    statusEl.textContent = "Refreshing…";
-    const old = document.getElementById("gviz-loader");
-    if (old) old.remove();
-    const script = document.createElement("script");
-    script.id = "gviz-loader";
-    script.src = buildUrl();
-    script.onerror = () => showError("Network error loading the sheet script.");
-    document.body.appendChild(script);
-    pendingTimeout = setTimeout(() => {
-      showError("No response from Google Sheets after 8 seconds.");
-    }, 8000);
-  }
-
-  document.getElementById("refreshBtnTop").addEventListener("click", loadData);
-  searchInputEl.addEventListener("input", applySearch);
-  guideLookupInputEl.addEventListener("input", () => lookupGuide(guideLookupInputEl.value));
-  lookupGuide("");
-  renderSkeleton();
   loadData();
   setInterval(loadData, REFRESH_MS);
 </script>
