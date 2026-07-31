@@ -292,12 +292,13 @@
     font-size: 15px;
   }
   .search-bar input::placeholder { color: rgba(242,236,217,0.45); }
-  .result-count {
+  .wall-count {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 12px;
-    letter-spacing: 0.5px;
-    color: rgba(242,236,217,0.55);
-    white-space: nowrap;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(242,236,217,0.5);
+    margin-bottom: 12px;
   }
 
   .recent-feed {
@@ -430,10 +431,7 @@
   <div class="recent-feed" id="recentFeed"></div>
 
   <div class="section-label"><span>The Setlist</span></div>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search by guide name or keyword…" autocomplete="off">
-    <span class="result-count" id="resultCount"></span>
-  </div>
+  <div class="wall-count" id="resultCount"></div>
   <div class="wall" id="wall"></div>
 
   <div class="section-label"><span>Artist Lookup</span></div>
@@ -466,7 +464,6 @@
   const statusEl = document.getElementById("status");
   const lastUpdatedEl = document.getElementById("lastUpdated");
   const errorBoxEl = document.getElementById("errorBox");
-  const searchInputEl = document.getElementById("searchInput");
   const wallEl = document.getElementById("wall");
   const resultCountEl = document.getElementById("resultCount");
   const recentFeedEl = document.getElementById("recentFeed");
@@ -506,13 +503,13 @@
     return `<div class="${className}">spotted by ${escapeHtml(nominator)}</div>`;
   }
 
-  function renderWall(list) {
-    resultCountEl.textContent = `${list.length} moment${list.length === 1 ? "" : "s"}`;
-    if (list.length === 0) {
-      wallEl.innerHTML = `<div class="wall-empty">No Rockstar Moments match that search yet.</div>`;
+  function renderWall() {
+    resultCountEl.textContent = `${allMoments.length} moment${allMoments.length === 1 ? "" : "s"}`;
+    if (allMoments.length === 0) {
+      wallEl.innerHTML = `<div class="wall-empty">No Rockstar Moments logged yet — be the first!</div>`;
       return;
     }
-    wallEl.innerHTML = list.map(m => `
+    wallEl.innerHTML = allMoments.map(m => `
       <div class="moment-card">
         <div class="moment-top">
           <span class="moment-guide">${escapeHtml(m.guide)}</span>
@@ -575,16 +572,6 @@
     `;
   }
 
-  function applySearch() {
-    const q = searchInputEl.value.trim().toLowerCase();
-    if (!q) { renderWall(allMoments); return; }
-    const filtered = allMoments.filter(m =>
-      m.guide.toLowerCase().includes(q) ||
-      (m.moment || "").toLowerCase().includes(q)
-    );
-    renderWall(filtered);
-  }
-
   function parseRows(gvizData) {
     const rows = gvizData.table.rows || [];
     allMoments = [];
@@ -612,7 +599,7 @@
       renderRecentActivity();
       populateGuideNames();
       lookupGuide(guideLookupInputEl.value);
-      applySearch();
+      renderWall();
       const now = new Date();
       lastUpdatedEl.textContent = `Updated ${now.toLocaleTimeString()}`;
       statusEl.textContent = `Auto-refreshing every ${REFRESH_MS / 1000}s`;
@@ -649,7 +636,6 @@
   }
 
   document.getElementById("refreshBtnTop").addEventListener("click", loadData);
-  searchInputEl.addEventListener("input", applySearch);
   guideLookupInputEl.addEventListener("input", () => lookupGuide(guideLookupInputEl.value));
   lookupGuide("");
   loadData();
