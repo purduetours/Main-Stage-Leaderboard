@@ -136,6 +136,78 @@
   .btn-primary:hover { background: var(--gold-bright); }
   .btn-ghost { background: transparent; color: var(--cream); border-color: rgba(242,236,217,0.4); }
   .btn-ghost:hover { border-color: var(--cream); }
+  .btn:disabled { opacity: 0.55; cursor: default; transform: none; }
+
+  .entry-panel {
+    background: var(--charcoal);
+    border: 1px solid rgba(242,236,217,0.15);
+    border-left: 3px solid var(--spot);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-top: 26px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  }
+  .entry-panel[hidden] { display: none; }
+  .entry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .entry-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .entry-field label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(242,236,217,0.75);
+  }
+  .entry-field .req { color: var(--spot); }
+  .entry-field .opt {
+    color: rgba(242,236,217,0.4);
+    text-transform: none;
+    letter-spacing: 0.5px;
+  }
+  .entry-field input,
+  .entry-field textarea {
+    background: rgba(242,236,217,0.05);
+    border: 1px solid rgba(242,236,217,0.18);
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 140ms ease;
+    width: 100%;
+  }
+  .entry-field textarea { resize: vertical; line-height: 1.5; }
+  .entry-field input:focus, .entry-field textarea:focus { border-color: var(--gold); }
+  .entry-field input::placeholder,
+  .entry-field textarea::placeholder { color: rgba(242,236,217,0.35); }
+
+  .entry-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .entry-status {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: rgba(242,236,217,0.6);
+  }
+  .entry-status.ok { color: var(--gold-bright); }
+  .entry-status.warn { color: var(--spot); }
+  .entry-status.err { color: #FF9C9C; }
+  .entry-fallback {
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: rgba(242,236,217,0.45);
+  }
+  .entry-fallback a { color: rgba(242,236,217,0.7); }
 
   .section-label {
     font-family: 'Barlow Condensed', sans-serif;
@@ -408,6 +480,82 @@
     color: rgba(232,169,59,0.7);
   }
 
+  .charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+  }
+  .chart-card {
+    background: rgba(242,236,217,0.05);
+    border: 1px solid rgba(242,236,217,0.15);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .chart-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 3px;
+  }
+  .chart-meta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: rgba(242,236,217,0.45);
+    margin-bottom: 14px;
+  }
+  .chart-rows { display: flex; flex-direction: column; gap: 9px; }
+  .chart-row {
+    display: grid;
+    grid-template-columns: 22px minmax(70px, 130px) 1fr 28px;
+    align-items: center;
+    gap: 10px;
+  }
+  .chart-rank {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: rgba(242,236,217,0.4);
+  }
+  .chart-row:first-child .chart-rank { color: var(--spot); }
+  .chart-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    color: rgba(242,236,217,0.85);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .chart-track {
+    display: block;
+    height: 10px;
+    background: rgba(242,236,217,0.08);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .chart-fill {
+    display: block;
+    height: 100%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 100%);
+  }
+  .chart-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold-bright);
+    text-align: right;
+  }
+  .chart-empty {
+    color: rgba(242,236,217,0.45);
+    font-size: 13px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .moment-card, .btn, .recent-item, .search-bar { transition: none; }
     .live-dot { animation: none; }
@@ -421,11 +569,36 @@
     <h1 class="title">MAIN <span class="gold">STAGE</span></h1>
     <div class="tagline">Rockstar Moments — Spot the Set, Log the Moment</div>
     <div class="cta-row">
-      <a class="btn btn-primary" id="formLink" href="#" target="_blank" rel="noopener">🎤 Log a Rockstar Moment</a>
+      <button class="btn btn-primary" id="openEntryBtn" type="button" aria-expanded="false" aria-controls="entryPanel">🎤 Log a Rockstar Moment</button>
       <a class="btn btn-ghost" href="https://ontour.admissions.purdue.edu/tgis/" target="_blank" rel="noopener">🔗 TGIS</a>
       <button class="btn btn-ghost" id="refreshBtnTop" type="button">↻ Refresh Now</button>
     </div>
   </div>
+
+  <form class="entry-panel" id="entryPanel" hidden>
+    <div class="entry-grid">
+      <div class="entry-field">
+        <label for="entryGuide">Who are you reporting on? <span class="req">*</span></label>
+        <input id="entryGuide" list="guideNames" placeholder="Guide's name" maxlength="120" autocomplete="off" required>
+      </div>
+      <div class="entry-field">
+        <label for="entryNominator">Who's reporting? <span class="opt">(optional)</span></label>
+        <input id="entryNominator" placeholder="Your name" maxlength="120" autocomplete="off">
+      </div>
+    </div>
+    <div class="entry-field">
+      <label for="entryMoment">What was their Rockstar Moment? <span class="req">*</span></label>
+      <textarea id="entryMoment" rows="4" placeholder="What did they do?" maxlength="1000" required></textarea>
+    </div>
+    <div class="entry-actions">
+      <button class="btn btn-primary" id="entrySubmitBtn" type="submit">Post to the Setlist</button>
+      <button class="btn btn-ghost" id="entryCancelBtn" type="button">Cancel</button>
+      <span class="entry-status" id="entryStatus" role="status"></span>
+    </div>
+    <div class="entry-fallback">
+      Trouble posting? <a id="formLink" href="#" target="_blank" rel="noopener">Use the Google Form instead</a>.
+    </div>
+  </form>
 
   <div class="section-label"><span>Just In</span></div>
   <div class="recent-feed" id="recentFeed"></div>
@@ -440,6 +613,20 @@
     <datalist id="guideNames"></datalist>
   </div>
   <div class="lookup-result" id="lookupResult"></div>
+
+  <div class="section-label"><span>The Charts</span></div>
+  <div class="charts">
+    <div class="chart-card">
+      <div class="chart-title">Shoutouts Received</div>
+      <div class="chart-meta" id="chartReceivedMeta"></div>
+      <div class="chart-rows" id="chartReceived"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Shoutouts Given</div>
+      <div class="chart-meta" id="chartGivenMeta"></div>
+      <div class="chart-rows" id="chartGiven"></div>
+    </div>
+  </div>
 
   <div class="status-row">
     <div id="lastUpdated">Loading…</div>
@@ -457,6 +644,14 @@
   // Numeric tab id, not the tab name — the gid survives a tab rename, a name does not.
   const SHEET_GID = "944135761";
   const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdJOB5KNIYejc93BGc_JOsLWL-E_j3Ze5QBt74Bqu_382mskw/viewform";
+  // Same form, its submit endpoint. Posting here is what writes the row to the sheet,
+  // so the on-page form and the Google Form feed the exact same responses tab.
+  const FORM_ACTION = FORM_URL.replace(/\/viewform.*$/, "/formResponse");
+  // Field ids from the live form. If a question is deleted and re-added in Google Forms
+  // it gets a new id — reopen the form's HTML and re-read the entry.NNN values.
+  const FIELD_GUIDE = "entry.1211982758";      // Who are you reporting on?
+  const FIELD_MOMENT = "entry.113659133";      // What was their "Rockstar Moment?"
+  const FIELD_NOMINATOR = "entry.733750023";   // Who's Reporting? (optional)
   const REFRESH_MS = 30000;
 
   document.getElementById("formLink").href = FORM_URL;
@@ -470,6 +665,18 @@
   const guideLookupInputEl = document.getElementById("guideLookupInput");
   const guideNamesEl = document.getElementById("guideNames");
   const lookupResultEl = document.getElementById("lookupResult");
+  const openEntryBtnEl = document.getElementById("openEntryBtn");
+  const entryPanelEl = document.getElementById("entryPanel");
+  const entryGuideEl = document.getElementById("entryGuide");
+  const entryMomentEl = document.getElementById("entryMoment");
+  const entryNominatorEl = document.getElementById("entryNominator");
+  const entrySubmitBtnEl = document.getElementById("entrySubmitBtn");
+  const entryCancelBtnEl = document.getElementById("entryCancelBtn");
+  const entryStatusEl = document.getElementById("entryStatus");
+  const chartReceivedEl = document.getElementById("chartReceived");
+  const chartGivenEl = document.getElementById("chartGiven");
+  const chartReceivedMetaEl = document.getElementById("chartReceivedMeta");
+  const chartGivenMetaEl = document.getElementById("chartGivenMeta");
 
   let allMoments = [];
 
@@ -537,6 +744,69 @@
     `).join("");
   }
 
+  /* People type their own names, so one person arrives as "jordan", "Jordan" and
+     "  JORDAN  ". Capitalization is a typing artifact rather than a signal, so a
+     name-cased variant wins even if a shouted or lowercase one was typed more
+     often. Nothing is invented — only spellings someone actually entered are
+     shown, so a name always typed lowercase stays lowercase. */
+  function bestSpelling(spellings) {
+    const looksLikeAName = value => /^[A-Z]/.test(value) && /[a-z]/.test(value);
+    return [...spellings.entries()].sort((a, b) =>
+      (looksLikeAName(b[0]) ? 1 : 0) - (looksLikeAName(a[0]) ? 1 : 0) ||
+      b[1] - a[1] ||
+      a[0].localeCompare(b[0])
+    )[0][0];
+  }
+
+  /* Counts one moment per row, keyed by whichever name `pick` returns. Rows with
+     no name for that side are skipped, so moments logged without a reporter do
+     not invent a blank entry in the "given" chart. */
+  function tallyNames(pick) {
+    const groups = new Map();
+    allMoments.forEach(m => {
+      const raw = (pick(m) || "").trim();
+      if (!raw) return;
+      const key = raw.toLowerCase();
+      const group = groups.get(key) || { count: 0, spellings: new Map() };
+      group.count++;
+      group.spellings.set(raw, (group.spellings.get(raw) || 0) + 1);
+      groups.set(key, group);
+    });
+    return [...groups.values()]
+      .map(group => ({ name: bestSpelling(group.spellings), count: group.count }))
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  }
+
+  function renderChart(targetEl, entries, emptyMessage) {
+    if (entries.length === 0) {
+      targetEl.innerHTML = `<div class="chart-empty">${emptyMessage}</div>`;
+      return;
+    }
+    const max = entries[0].count;
+    targetEl.innerHTML = entries.map((entry, index) => `
+      <div class="chart-row">
+        <span class="chart-rank">${index + 1}</span>
+        <span class="chart-name" title="${escapeHtml(entry.name)}">${escapeHtml(entry.name)}</span>
+        <span class="chart-track"><span class="chart-fill" style="width:${Math.max((entry.count / max) * 100, 8)}%"></span></span>
+        <span class="chart-count">${entry.count}</span>
+      </div>
+    `).join("");
+  }
+
+  // Both charts list every name on the sheet, ranked — they are not top-N cuts.
+  function renderCharts() {
+    const received = tallyNames(m => m.guide);
+    const given = tallyNames(m => m.nominator);
+    renderChart(chartReceivedEl, received, "No shoutouts yet.");
+    renderChart(chartGivenEl, given, "No one has left their name yet.");
+    chartReceivedMetaEl.textContent = received.length
+      ? `All ${received.length} guide${received.length === 1 ? "" : "s"}, most first`
+      : "";
+    chartGivenMetaEl.textContent = given.length
+      ? `All ${given.length} reporter${given.length === 1 ? "" : "s"}, most first`
+      : "";
+  }
+
   function populateGuideNames() {
     const names = [...new Set(allMoments.map(m => m.guide))].sort((a, b) => a.localeCompare(b));
     guideNamesEl.innerHTML = names.map(n => `<option value="${escapeHtml(n)}"></option>`).join("");
@@ -600,6 +870,7 @@
       populateGuideNames();
       lookupGuide(guideLookupInputEl.value);
       renderWall();
+      renderCharts();
       const now = new Date();
       lastUpdatedEl.textContent = `Updated ${now.toLocaleTimeString()}`;
       statusEl.textContent = `Auto-refreshing every ${REFRESH_MS / 1000}s`;
@@ -634,6 +905,111 @@
       showError("No response from Google Sheets after 8 seconds.");
     }, 8000);
   }
+
+  /* ---- posting a new moment ------------------------------------------------
+     The browser cannot read a cross-origin Google Forms response, so the POST
+     goes out in no-cors mode and comes back opaque — success is not knowable
+     from the response itself. Instead we re-read the sheet a few times and look
+     for the row we just wrote, which is a real confirmation rather than a
+     hopeful one. */
+
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  /* Duplicate guard. Case and spacing are normalized so "Great  Tour" and
+     "great tour" are one entry. The nominator is part of the key on purpose:
+     one person cannot post the same moment twice, but two different people
+     can independently say the same thing about the same guide. */
+  function momentKey(guide, moment, nominator) {
+    const norm = value => String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+    return [norm(guide), norm(moment), norm(nominator)].join("|");
+  }
+
+  const submittedKeys = new Set();
+
+  function sheetHasMoment(key) {
+    return allMoments.some(m => momentKey(m.guide, m.moment, m.nominator) === key);
+  }
+
+  function setEntryStatus(message, kind) {
+    entryStatusEl.textContent = message;
+    entryStatusEl.className = `entry-status${kind ? " " + kind : ""}`;
+  }
+
+  function setPanelOpen(open) {
+    entryPanelEl.hidden = !open;
+    openEntryBtnEl.setAttribute("aria-expanded", String(open));
+    if (open) entryGuideEl.focus();
+  }
+
+  entryPanelEl.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const guide = entryGuideEl.value.trim();
+    const moment = entryMomentEl.value.trim();
+    const nominator = entryNominatorEl.value.trim();
+    if (!guide || !moment) {
+      setEntryStatus("Add both a guide name and a moment.", "warn");
+      return;
+    }
+
+    const key = momentKey(guide, moment, nominator);
+    if (submittedKeys.has(key)) {
+      setEntryStatus("You already posted that one.", "warn");
+      return;
+    }
+    if (sheetHasMoment(key)) {
+      setEntryStatus("That moment is already on the Setlist.", "warn");
+      return;
+    }
+    submittedKeys.add(key);
+
+    entrySubmitBtnEl.disabled = true;
+    setEntryStatus("Sending…");
+
+    const body = new URLSearchParams();
+    body.append(FIELD_GUIDE, guide);
+    body.append(FIELD_MOMENT, moment);
+    if (nominator) body.append(FIELD_NOMINATOR, nominator);
+
+    try {
+      // URLSearchParams sends a form-encoded content type, which needs no preflight.
+      await fetch(FORM_ACTION, { method: "POST", mode: "no-cors", body });
+    } catch (err) {
+      submittedKeys.delete(key);
+      entrySubmitBtnEl.disabled = false;
+      setEntryStatus("Couldn't reach Google Forms — check your connection.", "err");
+      return;
+    }
+
+    setEntryStatus("Sent — confirming on the sheet…");
+    for (let attempt = 0; attempt < 4; attempt++) {
+      await wait(2000);
+      loadData();
+      await wait(1500);
+      if (sheetHasMoment(key)) {
+        entrySubmitBtnEl.disabled = false;
+        entryGuideEl.value = "";
+        entryMomentEl.value = "";
+        setEntryStatus("Posted to the Setlist. 🎸", "ok");
+        return;
+      }
+    }
+
+    /* Never confirmed. Release the key so a genuine failure can be retried —
+       if the row does land later, sheetHasMoment() blocks the retry instead. */
+    submittedKeys.delete(key);
+    entrySubmitBtnEl.disabled = false;
+    setEntryStatus("Sent, but it hasn't appeared yet. Give it a moment and hit Refresh.", "warn");
+  });
+
+  openEntryBtnEl.addEventListener("click", () => {
+    setPanelOpen(entryPanelEl.hidden);
+    setEntryStatus("");
+  });
+  entryCancelBtnEl.addEventListener("click", () => {
+    setPanelOpen(false);
+    setEntryStatus("");
+  });
 
   document.getElementById("refreshBtnTop").addEventListener("click", loadData);
   guideLookupInputEl.addEventListener("input", () => lookupGuide(guideLookupInputEl.value));
